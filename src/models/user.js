@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
             }
         }
     },
+    gender: {
+        type: String,
+        required: true,
+    },
     post: {
         type: String,
         required: true,
@@ -92,6 +96,6 @@ UserSchema.pre('save', async function(next) {
     next()
 })
 
-const User = mongoose.model('User', userSchema)
+const User = mongoose.model('User', UserSchema)
 
 module.exports = User
