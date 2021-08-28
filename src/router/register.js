@@ -4,7 +4,7 @@ const User = require('../models/user.js')
 const router = new express.Router()
 
 router.get('/register', (req, res) => {
-    res.render('register')
+    res.render('register', {error: req.query.error})
 })
 
 router.post('/register', async (req, res) => {
@@ -16,9 +16,14 @@ router.post('/register', async (req, res) => {
         post: req.body.designation,
         leavesLeft: 0
     })
-    const token = await user.generateAuthToken()
 
-    res.redirect('/')
+    try {
+        const token = await user.generateAuthToken()
+        res.redirect('/')
+    }
+    catch (e) {
+        res.redirect('/register?error=1')
+    }
 })
 
 module.exports = router

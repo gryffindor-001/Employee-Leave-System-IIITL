@@ -2,6 +2,7 @@ require('./db/mongoose')
 const express = require("express")
 const path = require('path')
 const registerRouter = require('./router/register')
+const loginRouter = require('./router/login')
 const PORT = process.env.PORT
 
 const app = express()
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: false }))
 
 //routers
 app.use(registerRouter)
+app.use(loginRouter)
 
 app.get('/', (req, res) => {
     data=[1,2,3,4]
