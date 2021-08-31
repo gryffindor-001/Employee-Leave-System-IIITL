@@ -1,10 +1,11 @@
 const express = require('express')
-const User = require('../models/user.js')
+const User = require('../models/user')
+const unauth = require('../middleware/unauth')
 
 const router = new express.Router()
 
-router.get('/login', (req, res) => {
-    res.render('login', {error: req.query.error})
+router.get('/login', unauth, (req, res) => {
+    res.render('login', {error: req.query.error, auth: req.query.auth})
 })
 
 router.post('/login', async (req, res) => {
@@ -12,6 +13,7 @@ router.post('/login', async (req, res) => {
         const user = await User.findByCredentials(req.body.email, req.body.password)
 
         const token = await user.generateAuthToken()
+        res.cookie('auth_token', token)
         res.redirect('/')
     } catch (e) {
         res.redirect('/login?error=1')
