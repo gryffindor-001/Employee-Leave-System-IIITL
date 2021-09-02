@@ -12,7 +12,7 @@ const auth = async (req, res, next) => {
     const user = await User.findOne({_id: decode._id, 'tokens.token': token})
 
     if(!user) {
-        return res.redirect('login?auth=1')
+        return res.redirect('/login?auth=1')
     }
 
     req.user = user

@@ -3,6 +3,7 @@ const express = require("express")
 const path = require('path')
 const registerRouter = require('./router/register')
 const loginRouter = require('./router/login')
+const logoutRouter = require('./router/logout')
 const cookieParser = require('cookie-parser')
 const PORT = process.env.PORT
 
@@ -27,9 +28,10 @@ app.use(express.urlencoded({ extended: false }))
 //routers
 app.use(registerRouter)
 app.use(loginRouter)
+app.use(logoutRouter)
 
 app.get('/', auth, (req, res) => {
-    console.log(req.user)
+    // console.log(req.user)
     res.render('test')
 })
 
