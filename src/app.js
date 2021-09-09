@@ -5,6 +5,7 @@ const registerRouter = require('./router/register')
 const loginRouter = require('./router/login')
 const logoutRouter = require('./router/logout')
 const adminLoginRouter = require('./router/admin-login')
+const adminRouter = require('./router/admin')
 const cookieParser = require('cookie-parser')
 const PORT = process.env.PORT
 
@@ -31,6 +32,7 @@ app.use(registerRouter)
 app.use(loginRouter)
 app.use(logoutRouter)
 app.use(adminLoginRouter)
+app.use(adminRouter)
 
 app.get('/', auth, (req, res) => {
     // console.log(req.user)
