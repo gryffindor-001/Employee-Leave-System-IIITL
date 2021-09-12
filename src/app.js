@@ -6,11 +6,13 @@ const loginRouter = require('./router/login')
 const logoutRouter = require('./router/logout')
 const adminLoginRouter = require('./router/admin-login')
 const adminRouter = require('./router/admin')
+const userRouter = require('./router/user')
+const adminLogoutRouter = require('./router/admin-logout')
 const cookieParser = require('cookie-parser')
 const PORT = process.env.PORT
 
 //middleware
-const auth = require('./middleware/auth')
+const unauth = require('./middleware/unauth')
 
 const app = express()
 app.set('view engine', 'ejs')
@@ -33,10 +35,11 @@ app.use(loginRouter)
 app.use(logoutRouter)
 app.use(adminLoginRouter)
 app.use(adminRouter)
+app.use(userRouter)
+app.use(adminLogoutRouter)
 
-app.get('/', auth, (req, res) => {
-    // console.log(req.user)
-    res.render('test')
+app.get('/', unauth, (req, res) => {
+    res.render('home')
 })
 
 app.listen(PORT, () => {

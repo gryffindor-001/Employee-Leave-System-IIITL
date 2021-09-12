@@ -21,7 +21,7 @@ router.post('/register', async (req, res) => {
     try {
         const token = await user.generateAuthToken()
         res.cookie('auth_token', token)
-        res.redirect('/')
+        res.redirect('/user')
     }
     catch (e) {
         res.redirect('/register?error=1')
