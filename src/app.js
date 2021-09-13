@@ -8,6 +8,7 @@ const adminLoginRouter = require('./router/admin-login')
 const adminRouter = require('./router/admin')
 const userRouter = require('./router/user')
 const adminLogoutRouter = require('./router/admin-logout')
+const leaveRouter = require('./router/leave')
 const cookieParser = require('cookie-parser')
 const PORT = process.env.PORT
 
@@ -37,6 +38,7 @@ app.use(adminLoginRouter)
 app.use(adminRouter)
 app.use(userRouter)
 app.use(adminLogoutRouter)
+app.use(leaveRouter)
 
 app.get('/', unauth, (req, res) => {
     res.render('home')
