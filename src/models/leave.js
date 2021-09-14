@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const leaveSchema = new mongoose.Schema({
-    id: {
+    userID: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },

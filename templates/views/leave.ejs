@@ -5,13 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave Request Form</title>
+    <script>
+        function setDate() {
+            alert('chl raaaaa')
+            var input = document.createElement('input')
+            input.type = "text"
+            input.name = "day"
+            input.value = "today"
+            const form = document.leaveForm
+            form.appendChild(input)
+        }
+    </script>
 </head>
 <body>
-    <form method="POST">
+    <form name="leaveForm" method="POST" onsubmit="setDate()">
         
-        <label>Leave From:<input type="date", name="startDate"></label>
+        <label>Leave From:<input type="date" name="startDate"></label>
         <br>
-        <label>Leave To:<input type="date", name="endDate"></label>
+        <label>Leave To:<input type="date" name="endDate"></label>
         <br>
         <label>Reason for Leave:<textarea name="reason"></textarea></label>
         <br>
