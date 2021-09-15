@@ -4,40 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="/css/login.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="css/style.css">
+    <title>Login</title>
 </head>
 <body>
-    
-    <div class="wrapper fadeInDown">
-    <div id="formContent">
-        <div class="fadeIn first">
-        <img src="/img/icon.jpg" id="icon" alt="User Icon" style="width:50px;height: 50px;margin-bottom: 10px;"/>
-            <h2 style="font-size: 30px;">
-                <!-- <script> -->
-                    <% if(type=="user") { %>
-                        User Login
-                    <% } else { %>
-                        Admin Login
-                    <% } %>
-                <!-- </script> -->
-            </h2>
+    <div class="full-container-fluid bg-primary-darker">
+        <div class="panel rounded">
+            <div class="panel-title">
+                <h2 class="text-center">
+                        <% if(type=="user") { %>
+                            User Login
+                        <% } else { %>
+                            Admin Login
+                        <% } %>
+                    <!-- Admin Login -->
+                </h2>
+            </div>   
+
+            <form method="POST">
+                <input type="email" id="login" class="fadeIn second" name="email" placeholder="Email">
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
+                <input type="submit" class="btn btn-primary" value="Log In">
+            </form>
+            <div class="d-flex justify-content-center">
+                <a href="/" class="btn">Home</a>
+                <a href="/register" class="btn">Register</a>    
+            </div>
         </div>
-
-        <form method="POST">
-            <input type="email" id="login" class="fadeIn second" name="email" placeholder="Email">
-            <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
-            <input type="submit" class="fadeIn fourth" value="Log In">
-        </form>
-
-        <div id="formFooter">
-        <a class="underlineHover" href="#">Forgot Password?</a>
-        </div>
-
-    </div>
     </div>
     <script>
         window.onload = function() {
