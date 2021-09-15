@@ -7,11 +7,12 @@
     <title>Leave Request Form</title>
     <script>
         function setDate() {
-            alert('chl raaaaa')
+            var nowDate = new Date(); 
+            var date = nowDate.getFullYear()+'-'+(nowDate.getMonth()+1)+'-'+nowDate.getDate()
             var input = document.createElement('input')
-            input.type = "text"
+            input.type = "hidden"
             input.name = "day"
-            input.value = "today"
+            input.value = date
             const form = document.leaveForm
             form.appendChild(input)
         }
