@@ -7,31 +7,42 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="css/style.css">
-    <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Document</title>
 </head>
 <body>
-    <div class="full-container-fluid bg-primary-darker">
-        <div class="panel rounded">
-            <div class="panel-title">
-                <h2 class="text-center">
-                        <% if(type=="user") { %>
-                            User Login
-                        <% } else { %>
-                            Admin Login
-                        <% } %>
-                    <!-- Admin Login -->
-                </h2>
-            </div>   
+    <div class="container-fluid bg-primary-site-darker full-height">
+        <div class="container">
 
-            <form method="POST">
-                <input type="email" id="login" class="fadeIn second" name="email" placeholder="Email">
-                <input type="password" id="password" class="fadeIn third" name="password" placeholder="Password">
-                <input type="submit" class="btn btn-primary" value="Log In">
-            </form>
-            <div class="d-flex justify-content-center">
-                <a href="/" class="btn">Home</a>
-                <a href="/register" class="btn">Register</a>    
+            <div class="row align-items-center full-height">
+                <div class="col-md-8 col-lg-5 col-xl-4 bg-white rounded-curve px-4 px-sm-5 pt-4 pb-2 mx-auto">
+                    <div class="panel-title mb-4">
+                        <h2 class="text-center">
+                            <!-- <script> -->
+                                <% if(type=="user") { %>
+                                    User Login
+                                <% } else { %>
+                                    Admin Login
+                                <% } %>
+                            <!-- </script> -->
+                            <!-- Admin Login -->
+                        </h2>
+                    </div>   
+        
+                    <form method="POST">
+                        <div class="mb-3">
+                            <input type="email" id="login" class="form-control" name="email" placeholder="Email">
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" id="password" class="form-control" name="password" placeholder="Password">
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Log In">
+                    </form>
+                    <div class="mt-3 d-flex justify-content-center border-top pt-2">
+                        <a href="/" class="btn btn-link">Home</a>
+                        <a href="/register" class="btn btn-link">Register</a>    
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -45,5 +56,7 @@
             <% } %>
         }
     </script>
+    <script src="/js/jquery-3.6.0.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
