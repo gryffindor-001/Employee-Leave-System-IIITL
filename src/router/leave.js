@@ -5,8 +5,15 @@ const moment = require('moment')
 
 const router = new express.Router()
 
-router.get('/leave', auth, (req, res) => {
-    res.render('leave')
+router.get('/leave', auth, async (req, res) => {
+    const pending = await Leave.find({
+        userID : req.user._id,
+        status : "pending"
+    })
+    res.render('leave',{
+        pending,
+        leaveleft : req.user.leavesLeft
+    })
 })
 
 router.post('/leave', auth, async (req, res) => {
@@ -24,17 +31,9 @@ router.post('/leave', auth, async (req, res) => {
         reason: req.body.reason,
         status: "pending",
         comment: ""
-    })
+    })    
 
-    const startDate = req.body.startDate
-    const endDate = req.body.endDate
-
-    console.log(req.body)
-    // console.log(moment(startDate).unix())
-    // console.log(moment(endDate).unix())
-
-    // await leave.save()
-
+    await leave.save()
     res.redirect('/leave')
 })
 

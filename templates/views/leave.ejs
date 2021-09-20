@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave Request Form</title>
-    <script> 
-        function dateValidator(form){
-            var date = new Date(); 
-            var todayDate = new Date(date.getFullYear(),date.getMonth(),date.getDate());
+    <script>
+        function dateValidator(form) {
+            var date = new Date();
+            var todayDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
             var todayTimeStamp = todayDate.getTime()
 
-            var stDate= form.startDate.value.split("-")
-            var startDate = new Date(stDate[0],stDate[1]-1,stDate[2]);
+            var stDate = form.startDate.value.split("-")
+            var startDate = new Date(stDate[0], stDate[1] - 1, stDate[2]);
             var startTimeStamp = startDate.getTime()
 
-            if(startTimeStamp<todayTimeStamp){
+            if (startTimeStamp < todayTimeStamp) {
                 alert("Starting Date can not be earlier than today")
                 form.startDate.focus();
                 return false
             }
 
-            var enDate= form.endDate.value.split("-")
-            var endingDate = new Date(enDate[0],enDate[1]-1,enDate[2]);
+            var enDate = form.endDate.value.split("-")
+            var endingDate = new Date(enDate[0], enDate[1] - 1, enDate[2]);
             var endTimeStamp = endingDate.getTime()
 
-            if(endTimeStamp<startTimeStamp){
+            if (endTimeStamp < startTimeStamp) {
                 alert("End Date can not be earlier than Start date")
                 form.endDate.focus();
                 return false
@@ -35,9 +36,10 @@
         }
     </script>
 </head>
+
 <body>
     <form name="leaveForm" method="POST" onsubmit="return dateValidator(this)">
-        
+
         <label>Leave From:<input type="date" name="startDate" required></label>
         <br>
         <label>Leave To:<input type="date" name="endDate" required></label>
@@ -47,5 +49,12 @@
         <input type="submit" value="Submit">
 
     </form>
+
+    <%pending.forEach((e)=>{ %>
+        <p>
+            <%= e.reason %>
+        </p>
+    <% }) %>
 </body>
+
 </html>
