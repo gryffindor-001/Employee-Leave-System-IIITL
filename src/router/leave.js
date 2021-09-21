@@ -6,14 +6,11 @@ const moment = require('moment')
 const router = new express.Router()
 
 router.get('/leave', auth, async (req, res) => {
-    const pending = await Leave.find({
-        userID : req.user._id,
-        status : "pending"
-    })
-    res.render('leave',{
-        pending,
-        leaveleft : req.user.leavesLeft
-    })
+    const pending = await Leave.find({userID: req.user._id, status: "pending"})
+    const approved = await Leave.find({userID: req.user._id, status: "approved"})
+    const rejected = await Leave.find({userID: req.user._id, status: "rejected"})
+
+    res.render('leave', {pending, approved, rejected, leavesLeft: req.user.leavesLeft})
 })
 
 router.post('/leave', auth, async (req, res) => {
