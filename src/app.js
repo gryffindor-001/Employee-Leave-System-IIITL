@@ -41,7 +41,7 @@ app.use(adminLogoutRouter)
 app.use(leaveRouter)
 
 app.get('/', unauth, (req, res) => {
-    res.render('home')
+    res.render('index')
 })
 
 app.listen(PORT, () => {
