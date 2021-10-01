@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/popup.css">
+    <title>Leave</title>
+    <script>
+        function btnClick(id) {
+            var modal = document.getElementById(id);
+            modal.style.display = "block";
+        }
+
+        function spnClick(id) {
+            var modal = document.getElementById(id);
+            modal.style.display = "none";
+        }
+
+        function addID(id, form) {
+            var node = document.createElement('input')
+            node.setAttribute('type', 'hidden')
+            node.setAttribute('name', '_id')
+            node.setAttribute('value', id)
+
+            form.appendChild(node)
+        }
+    </script>
+</head>
+<body>
+    <%pending.forEach((e)=>{ %>
+        <button onclick="btnClick('<%= e._id %>')"><%= e.reason %></button>
+
+        <div id="<%= e._id %>" class="modal">
+
+        <div class="modal-content">
+            <span onclick="spnClick('<%= e._id %>')" class="close">&times;</span>
+            <p>startTime:<%= e.startTimeDay %>/<%= e.startTimeMonth %>/<%= e.startTimeYear %></p>
+            <p>endTime:<%= e.endTimeDay %>/<%= e.endTimeMonth %>/<%= e.endTimeYear %></p>
+            <p>reason:<%= e.reason %></p>
+            <p>status:<%= e.status %></p>
+
+            <form method="POST" onsubmit="addID('<%= e._id %>', this)">
+                <label>Comment: <textarea name="comment"></textarea></label>
+                <input type="submit" name="status" value="approve">
+                <input type="submit" name="status" value="reject">
+            </form>
+        </div>
+
+        </div>
+    <% }) %>
+</body>
+</html>
