@@ -64,7 +64,7 @@
         <br>
         <label>Leave To:<input type="date" name="endDate" required></label>
         <br>
-        <label>Reason for Leave:<textarea name="reason"></textarea></label>
+        <label>Reason for Leave:<textarea name="reason" required></textarea></label>
         <br>
         <input type="submit" value="Submit">
 
@@ -80,7 +80,10 @@
         <!-- Modal content --> 
         <div class="modal-content">
             <span onclick="spnClick('<%= e._id %>')" class="close">&times;</span>
-            <p><%= e.startTimeDay %></p>
+            <p>startTime:<%= e.startTimeDay %>/<%= e.startTimeMonth %>/<%= e.startTimeYear %></p>
+            <p>endTime:<%= e.endTimeDay %>/<%= e.endTimeMonth %>/<%= e.endTimeYear %></p>
+            <p>reason:<%= e.reason %></p>
+            <p>status:<%= e.status %></p>
         </div>
 
         </div>
