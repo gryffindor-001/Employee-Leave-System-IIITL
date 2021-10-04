@@ -4,9 +4,70 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>profile</title>
+    <link rel="stylesheet" href="/css/popup.css">
+    <title>Profile</title>
+    <script>
+        function btnClick(id) {
+            var modal = document.getElementById(id);
+            modal.style.display = "block";
+        }
+
+        function spnClick(id) {
+            var modal = document.getElementById(id);
+            modal.style.display = "none";
+        }
+    </script>
 </head>
 <body>
-    Kya hi dekhoge
+    <%= user.name %>
+    <br>
+    <%= user.email %>
+    <br>
+    <%= user.gender %>
+    <br>
+    <%= user.post %>
+    <br>
+    <%= user.leavesLeft %>
+    <br>
+
+    <%approved.forEach((e)=>{ %>
+        <!-- Trigger/Open The Modal -->
+        <button onclick="btnClick('<%= e._id %>')"><%= e.reason %></button>
+
+        <!-- The Modal -->
+        <div id="<%= e._id %>" class="modal">
+
+        <!-- Modal content --> 
+        <div class="modal-content">
+            <span onclick="spnClick('<%= e._id %>')" class="close">&times;</span>
+            <p>startTime:<%= e.startTimeDay %>/<%= e.startTimeMonth %>/<%= e.startTimeYear %></p>
+            <p>endTime:<%= e.endTimeDay %>/<%= e.endTimeMonth %>/<%= e.endTimeYear %></p>
+            <p>reason:<%= e.reason %></p>
+            <p>status:<%= e.status %></p>
+        </div>
+
+        </div>
+    <% }) %>
+    <%rejected.forEach((e)=>{ %>
+        <!-- Trigger/Open The Modal -->
+        <button onclick="btnClick('<%= e._id %>')"><%= e.reason %></button>
+
+        <!-- The Modal -->
+        <div id="<%= e._id %>" class="modal">
+
+        <!-- Modal content --> 
+        <div class="modal-content">
+            <span onclick="spnClick('<%= e._id %>')" class="close">&times;</span>
+            <p>startTime:<%= e.startTimeDay %>/<%= e.startTimeMonth %>/<%= e.startTimeYear %></p>
+            <p>endTime:<%= e.endTimeDay %>/<%= e.endTimeMonth %>/<%= e.endTimeYear %></p>
+            <p>reason:<%= e.reason %></p>
+            <p>status:<%= e.status %></p>
+            <% if(e.comment==="") {%>
+                <p>comment: <%= e.comment %></p>
+            <% } %>
+        </div>
+
+        </div>
+    <% }) %>
 </body>
 </html>
