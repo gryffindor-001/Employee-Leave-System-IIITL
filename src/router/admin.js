@@ -16,7 +16,7 @@ router.get('/admin/leave', auth, async (req, res) => {
 router.post('/admin/leave', auth, async (req, res) => {
     var leave = await Leave.findOne({_id: req.body._id})
     leave.status = req.body.status
-    leave.comment = req.body.comment
+    leave.comments = req.body.comment
 
     await leave.save()
     

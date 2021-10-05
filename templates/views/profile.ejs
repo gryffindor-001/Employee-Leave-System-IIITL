@@ -44,6 +44,9 @@
             <p>endTime:<%= e.endTimeDay %>/<%= e.endTimeMonth %>/<%= e.endTimeYear %></p>
             <p>reason:<%= e.reason %></p>
             <p>status:<%= e.status %></p>
+            <% if(e.comments) {%>
+                <p>comment: <%= e.comments %></p>
+            <% } %>
         </div>
 
         </div>
@@ -62,8 +65,8 @@
             <p>endTime:<%= e.endTimeDay %>/<%= e.endTimeMonth %>/<%= e.endTimeYear %></p>
             <p>reason:<%= e.reason %></p>
             <p>status:<%= e.status %></p>
-            <% if(e.comment==="") {%>
-                <p>comment: <%= e.comment %></p>
+            <% if(e.comments) {%>
+                <p>comment: <%= e.comments %></p>
             <% } %>
         </div>
 
