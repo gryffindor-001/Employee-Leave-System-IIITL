@@ -1,7 +1,8 @@
 const express = require('express')
+const moment = require('moment')
 const auth = require('../middleware/adminAuth')
 const Leave = require('../models/leave')
-
+const User = require('../models/user')
 const router = new express.Router()
 
 router.get('/admin', auth, (req, res) => {
@@ -19,6 +20,21 @@ router.post('/admin/leave', auth, async (req, res) => {
     leave.comments = req.body.comment
 
     await leave.save()
+
+    var user = await User.findOne({_id: leave.userID})
+    var start = leave.startTimeYear + '-' + leave.startTimeMonth + '-' + leave.startTimeDay
+    start = moment(start)
+    var end = leave.endTimeYear + '-' + leave.endTimeMonth + '-' + leave.endTimeDay
+    end = moment(end)
+    
+    start = moment(start).unix()
+    end = moment(end).unix()
+    var temp = (end-start)/(60*60*24)
+    
+    // if(leave.status==="approve") {
+    //     user.leavesLeft -= temp
+    //     await user.save()
+    // }
     
     res.redirect('/admin/leave')
 })
