@@ -34,4 +34,12 @@ router.post('/leave', auth, async (req, res) => {
     res.redirect('/leave')
 })
 
+router.get('/leave/delete', auth, async (req, res) => {
+    const id = req.query.id
+    
+    const leave = await Leave.deleteOne({_id: id})
+
+    res.redirect('/leave')
+})
+
 module.exports = router

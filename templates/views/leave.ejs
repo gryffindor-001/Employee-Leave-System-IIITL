@@ -146,7 +146,7 @@
                                     <% i=i+1 %>
                                     <td><%=e.startTimeDay%>/<%=e.startTimeMonth%>/<%=e.startTimeYear%></td>
                                     <td><%=e.endTimeDay%>/<%=e.endTimeMonth%>/<%=e.endTimeYear%></td>
-                                    <td><button>delete</button></td>
+                                    <td><a href="/leave/delete?id=<%= e._id %>"><button>delete</button></a></td>
                                 </tr>
                                 <% }) %>
                             </tbody>
@@ -226,7 +226,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-outline-danger">Delete</button>
+                    <a id="del-btn" href=""><button class="btn btn-outline-danger">Delete</button></a>
                 </div>
               </div>
             </div>
@@ -248,6 +248,7 @@
             modal.find('.modal-body .container #info-start-date span').text(e.startTimeDay+"/"+e.startTimeMonth+"/"+e.startTimeYear);
             modal.find('.modal-body .container #info-end-date span').text(e.endTimeDay+"/"+e.endTimeMonth+"/"+e.endTimeYear);
             modal.find('.modal-body .container #info-duration span').text(e.reason);
+            modal.find('.modal-footer #del-btn').attr("href", "/leave/delete?id=" + e._id);
         })
     })
     </script>
