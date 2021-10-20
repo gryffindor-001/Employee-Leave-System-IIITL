@@ -6,11 +6,27 @@ const moment = require('moment')
 const router = new express.Router()
 
 router.get('/leave', auth, async (req, res) => {
-    const pending = await Leave.find({userID: req.user._id, status: "pending"})
-    const approved = await Leave.find({userID: req.user._id, status: "approved"})
-    const rejected = await Leave.find({userID: req.user._id, status: "rejected"})
+    var pending = await Leave.find({userID: req.user._id, status: "pending"})
 
-    res.render('leave', {pending, approved, rejected, leavesLeft: req.user.leavesLeft})
+    pending.forEach(async (e) => {
+        var cur = moment().unix()
+        var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay
+        start = moment(start)
+        start = moment(start).unix()
+
+        start = start/(60*60*24)
+        cur = cur/(60*60*24)
+
+        if(start<cur) {
+            e.status = "reject"
+            e.comments = "Admin was unable to respond in Time"
+            await e.save()  
+        }
+    })
+
+    pending = await Leave.find({status: 'pending'})
+
+    res.render('leave', {pending, leavesLeft: req.user.leavesLeft})
 })
 
 router.post('/leave', auth, async (req, res) => {
