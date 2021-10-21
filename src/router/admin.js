@@ -55,6 +55,25 @@ router.post('/admin/leave', auth, async (req, res) => {
         await user.save()
     }
     
+    const pending = await Leave.find({_id: leave.userID, status: "pending"})
+
+    pending.forEach(async (e) => {
+        var estart = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay
+        estart = moment(start)
+        var eend = e.endTimeYear + '-' + e.endTimeMonth + '-' + e.endTimeDay
+        eend = moment(end)
+
+        estart = moment(estart).unix()
+        eend = moment(eend).unix()
+        var etemp = (eend-estart)/(60*60*24)
+
+        if(etemp>user.leavesLeft) {
+            e.status = "reject"
+            e.comments = "User does not have this many Leaves left"
+            await e.save()
+        }
+    })
+
     res.redirect('/admin/leave')
 })
 
