@@ -50,10 +50,10 @@ router.post('/admin/leave', auth, async (req, res) => {
     end = moment(end).unix()
     var temp = (end-start)/(60*60*24)
     
-    // if(leave.status==="approve") {
-    //     user.leavesLeft -= temp
-    //     await user.save()
-    // }
+    if(leave.status==="approve") {
+        user.leavesLeft -= temp
+        await user.save()
+    }
     
     res.redirect('/admin/leave')
 })
