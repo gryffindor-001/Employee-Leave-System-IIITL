@@ -10,9 +10,11 @@ router.get('/leave', auth, async (req, res) => {
 
     pending.forEach(async (e) => {
         var cur = moment().unix()
-        var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay
-        start = moment(start)
+        var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + " 00:00+05:30"
+        start = moment(start, "YYYY-MM-DD hh:mm")
         start = moment(start).unix()
+
+        // console.log(moment(start*1000).format())
 
         start = start/(60*60*24)
         cur = cur/(60*60*24)

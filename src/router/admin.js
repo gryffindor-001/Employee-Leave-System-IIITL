@@ -14,8 +14,8 @@ router.get('/admin/leave', auth, async (req, res) => {
 
     pending.forEach(async (e) => {
         var cur = moment().unix()
-        var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay
-        start = moment(start)
+        var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + "00:00+05:30"
+        start = moment(start, "YYYY-MM-DD hh:mm")
         start = moment(start).unix()
 
         start = start/(60*60*24)
@@ -41,10 +41,10 @@ router.post('/admin/leave', auth, async (req, res) => {
     await leave.save()
 
     var user = await User.findOne({_id: leave.userID})
-    var start = leave.startTimeYear + '-' + leave.startTimeMonth + '-' + leave.startTimeDay
-    start = moment(start)
-    var end = leave.endTimeYear + '-' + leave.endTimeMonth + '-' + leave.endTimeDay
-    end = moment(end)
+    var start = leave.startTimeYear + '-' + leave.startTimeMonth + '-' + leave.startTimeDay + " 00:00+05:30"
+    start = moment(start, "YYYY-MM-DD hh:mm")
+    var end = leave.endTimeYear + '-' + leave.endTimeMonth + '-' + leave.endTimeDay + " 00:00+05:30"
+    end = moment(end, "YYYY-MM-DD hh:mm")
     
     start = moment(start).unix()
     end = moment(end).unix()
@@ -58,10 +58,10 @@ router.post('/admin/leave', auth, async (req, res) => {
     const pending = await Leave.find({_id: leave.userID, status: "pending"})
 
     pending.forEach(async (e) => {
-        var estart = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay
-        estart = moment(start)
-        var eend = e.endTimeYear + '-' + e.endTimeMonth + '-' + e.endTimeDay
-        eend = moment(end)
+        var estart = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + " 00:00+05:30"
+        estart = moment(start, "YYYY-MM-DD hh:mm")
+        var eend = e.endTimeYear + '-' + e.endTimeMonth + '-' + e.endTimeDay + " 00:00+05:30"
+        eend = moment(end, "YYYY-MM-DD hh:mm")
 
         estart = moment(estart).unix()
         eend = moment(eend).unix()
