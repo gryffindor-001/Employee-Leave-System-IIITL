@@ -58,9 +58,9 @@ router.get('/leave/delete', auth, async (req, res) => {
 
     const leave = await Leave.deleteOne({_id: id})
     if(leave.status=='pending')
-    res.redirect('/leave')
+        res.redirect('/leave')
     else
-    res.redirect('/user/me')
+        res.redirect('/user/me')
 })
 
 module.exports = router

@@ -17,8 +17,8 @@ router.get('/user/me', auth, async (req, res) => {
 
     approved.forEach(async (e) => {
         var cur = moment().unix()
-        var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay
-        start = moment(start)
+        var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + " 00:00+05:30"
+        start = moment(start, "YYYY-MM-DD hh:mm")
         start = moment(start).unix()
 
         if(start<cur && (cur-start)/(24*60*60)>(365/2)) {
@@ -28,8 +28,8 @@ router.get('/user/me', auth, async (req, res) => {
 
     rejected.forEach(async (e) => {
         var cur = moment().unix()
-        var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay
-        start = moment(start)
+        var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + " 00:00+05:30"
+        start = moment(start, "YYYY-MM-DD hh:mm")
         start = moment(start).unix()
 
         if(start<cur && (cur-start)/(24*60*60)>(365/2)) {
