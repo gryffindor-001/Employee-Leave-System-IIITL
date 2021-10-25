@@ -26,7 +26,7 @@ router.get('/leave', auth, async (req, res) => {
         }
     })
 
-    pending = await Leave.find({status: 'pending'})
+    pending = await Leave.find({userID: req.user._id, status: "pending"})
 
     res.render('leave', {pending, leavesLeft: req.user.leavesLeft})
 })
@@ -55,9 +55,12 @@ router.post('/leave', auth, async (req, res) => {
 router.get('/leave/delete', auth, async (req, res) => {
     const id = req.query.id
     
-    const leave = await Leave.deleteOne({_id: id})
 
+    const leave = await Leave.deleteOne({_id: id})
+    if(leave.status=='pending')
     res.redirect('/leave')
+    else
+    res.redirect('/user/me')
 })
 
 module.exports = router
