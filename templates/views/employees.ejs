@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees</title>
+</head>
+<body>
+    <form method="POST">
+        Add Leaves to All
+        <input type="number" name="amount">
+        <button type="submit" name="modify" value="add">Modify</button>
+        <button type="submit" name="modify" value="set">Set</button>
+    </form>
+    <% users.forEach((e) => { %>
+        <pre><%= e.name %>   <%= e.leavesLeft %></pre>
+        <form action="/admin/users/<%= e._id %>" method="POST">
+            Add Leaves 
+            <input type="number" name="amount">
+            <button type="submit" name="modify" value="add">Modify</button>
+            <button type="submit" name="modify" value="set">Set</button>
+        </form>
+        <br>
+    <% }) %>
+</body>
+</html>

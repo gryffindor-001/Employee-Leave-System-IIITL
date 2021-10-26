@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,15 +18,27 @@
                         <li class="nav-item">
                             <a href="/" class="nav-link" style="color:#FFFFFF;">Home</a>
                         </li>
+                        <% if(home==2) { %>
                         <li class="nav-item" >
                             <a href="/user/me" class="nav-link" style="color:#FFFFFF;">Profile</a>
                         </li>
+                        <% } else if(home==3) { %>
+                        <li class="nav-item" >
+                            <a href="/admin/users" class="nav-link" style="color:#FFFFFF;">Employees</a>
+                        </li>
+                        <% } %>
                         <li class="nav-item" >
                             <a href="/about" class="nav-link" style="color:#FFFFFF;">About</a>
                         </li>
+                        <% if(home==2) { %>
                         <li class="nav-item" >
                             <a href="/logout" class="nav-link" style="color:#FFFFFF;">Logout</a>
                         </li>
+                        <% } else if(home==3) { %>
+                        <li class="nav-item" >
+                            <a href="/adminLogout" class="nav-link" style="color:#FFFFFF;">Logout</a>
+                        </li>
+                        <% } %>
                         <!-- <li class="nav-item">
                             <a href="s" class="nav-link">Hello</a>
                         </li>
@@ -103,7 +115,8 @@
                             <a href="/user/me" class="btn  btn-outline-light mr-md-2">Profile</a>
                             <a href="/logout" class="btn  btn-outline-light mr-md-2" style="white-space: nowrap">Logout</a>
                             <% } else { %>
-                            <a href="/admin/leave" class="btn btn-accent-site mr-md-2">Approve for Leaves</a>
+                            <a href="/admin/leave" class="btn btn-accent-site mr-md-2" style="white-space: nowrap">Approve for Leaves</a>
+                            <a href="/admin/users" class="btn  btn-outline-light mr-md-2">Employees</a>
                             <a href="/adminLogout" class="btn  btn-outline-light mr-md-2">Logout</a>
                             <!-- <a href="/adminLogin" class="btn  btn-outline-light mr-md-2" style="white-space: nowrap">Admin Login</a> -->
                             <% } %>

@@ -77,4 +77,40 @@ router.post('/admin/leave', auth, async (req, res) => {
     res.redirect('/admin/leave')
 })
 
+router.get('/admin/users', auth, async (req, res) => {
+    const users = await User.find({})
+
+    res.render('employees', {users})
+})
+
+router.post('/admin/users/:id', auth, async (req, res) => {
+    const user = await User.findOne({_id: req.params.id})
+
+    if(req.body.modify=='set') {
+        user.leavesLeft = parseInt(req.body.amount)
+    }
+    else {
+        user.leavesLeft += parseInt(req.body.amount)
+    }
+    await user.save()
+
+    res.redirect('/admin/users')
+})
+
+router.post('/admin/users', auth, async (req, res) => {
+    const users = await User.find({})
+
+    users.forEach(async (e) => {
+        if(req.body.modify=='set') {
+            e.leavesLeft = parseInt(req.body.amount)
+        }
+        else {
+            e.leavesLeft += parseInt(req.body.amount)
+        }
+        await e.save()
+    })
+
+    res.redirect('/admin/users')
+})
+
 module.exports = router
