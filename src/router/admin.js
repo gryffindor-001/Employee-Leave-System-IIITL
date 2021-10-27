@@ -12,7 +12,7 @@ router.get('/admin', auth, (req, res) => {
 router.get('/admin/leave', auth, async (req, res) => {
     var pending = await Leave.find({status: 'pending'})
 
-    pending.forEach(async (e) => {
+    await pending.forEach(async (e) => {
         var cur = moment().unix()
         var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + "00:00+05:30"
         start = moment(start, "YYYY-MM-DD hh:mm")
