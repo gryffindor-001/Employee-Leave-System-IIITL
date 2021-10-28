@@ -10,105 +10,127 @@ router.get('/admin', auth, (req, res) => {
 })
 
 router.get('/admin/leave', auth, async (req, res) => {
-    var pending = await Leave.find({status: 'pending'})
+    try {
+        var pending = await Leave.find({status: 'pending'})
+        
+        await pending.forEach(async (e) => {
+            var cur = moment().unix()
+            var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + "00:00+05:30"
+            start = moment(start, "YYYY-MM-DD hh:mm")
+            start = moment(start).unix()
 
-    await pending.forEach(async (e) => {
-        var cur = moment().unix()
-        var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + "00:00+05:30"
-        start = moment(start, "YYYY-MM-DD hh:mm")
-        start = moment(start).unix()
+            start = start/(60*60*24)
+            cur = cur/(60*60*24)
 
-        start = start/(60*60*24)
-        cur = cur/(60*60*24)
+            if(start<cur) {
+                e.status = "reject"
+                e.comments = "Admin was unable to respond in Time"
+                await e.save()  
+            }
+        })
 
-        if(start<cur) {
-            e.status = "reject"
-            e.comments = "Admin was unable to respond in Time"
-            await e.save()  
-        }
-    })
+        pending = await Leave.find({status: 'pending'})
+        
+        res.render("admin-leave", {pending})
+    } catch (e) {
+        console.log(e)
+    }
 
-    pending = await Leave.find({status: 'pending'})
-
-    res.render("admin-leave", {pending})
+    res.end()
 })
 
 router.post('/admin/leave', auth, async (req, res) => {
-    var leave = await Leave.findOne({_id: req.body._id})
-    leave.status = req.body.status
-    leave.comments = req.body.comment
+    try {    
+        var leave = await Leave.findOne({_id: req.body._id})
+        leave.status = req.body.status
+        leave.comments = req.body.comment
 
-    await leave.save()
+        await leave.save()
 
-    var user = await User.findOne({_id: leave.userID})
-    var start = leave.startTimeYear + '-' + leave.startTimeMonth + '-' + leave.startTimeDay + " 00:00+05:30"
-    start = moment(start, "YYYY-MM-DD hh:mm")
-    var end = leave.endTimeYear + '-' + leave.endTimeMonth + '-' + leave.endTimeDay + " 00:00+05:30"
-    end = moment(end, "YYYY-MM-DD hh:mm")
-    
-    start = moment(start).unix()
-    end = moment(end).unix()
-    var temp = (end-start)/(60*60*24)
-    
-    if(leave.status==="approve") {
-        user.leavesLeft -= temp
-        await user.save()
-    }
-    
-    const pending = await Leave.find({_id: leave.userID, status: "pending"})
-
-    pending.forEach(async (e) => {
-        var estart = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + " 00:00+05:30"
-        estart = moment(start, "YYYY-MM-DD hh:mm")
-        var eend = e.endTimeYear + '-' + e.endTimeMonth + '-' + e.endTimeDay + " 00:00+05:30"
-        eend = moment(end, "YYYY-MM-DD hh:mm")
-
-        estart = moment(estart).unix()
-        eend = moment(eend).unix()
-        var etemp = (eend-estart)/(60*60*24)
-
-        if(etemp>user.leavesLeft) {
-            e.status = "reject"
-            e.comments = "User does not have this many Leaves left"
-            await e.save()
+        var user = await User.findOne({_id: leave.userID})
+        var start = leave.startTimeYear + '-' + leave.startTimeMonth + '-' + leave.startTimeDay + " 00:00+05:30"
+        start = moment(start, "YYYY-MM-DD hh:mm")
+        var end = leave.endTimeYear + '-' + leave.endTimeMonth + '-' + leave.endTimeDay + " 00:00+05:30"
+        end = moment(end, "YYYY-MM-DD hh:mm")
+        
+        start = moment(start).unix()
+        end = moment(end).unix()
+        var temp = (end-start)/(60*60*24)
+        
+        if(leave.status==="approve") {
+            user.leavesLeft -= temp
+            await user.save()
         }
-    })
+        
+        const pending = await Leave.find({_id: leave.userID, status: "pending"})
+
+        pending.forEach(async (e) => {
+            var estart = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + " 00:00+05:30"
+            estart = moment(start, "YYYY-MM-DD hh:mm")
+            var eend = e.endTimeYear + '-' + e.endTimeMonth + '-' + e.endTimeDay + " 00:00+05:30"
+            eend = moment(end, "YYYY-MM-DD hh:mm")
+
+            estart = moment(estart).unix()
+            eend = moment(eend).unix()
+            var etemp = (eend-estart)/(60*60*24)
+
+            if(etemp>user.leavesLeft) {
+                e.status = "reject"
+                e.comments = "User does not have this many Leaves left"
+                await e.save()
+            }
+        })
+    } catch (e) {
+        console.log(e)
+    }
 
     res.redirect('/admin/leave')
 })
 
 router.get('/admin/users', auth, async (req, res) => {
-    const users = await User.find({})
-
-    res.render('employees', {users})
+    try { 
+        const users = await User.find({}) 
+        res.render('employees', {users})
+    } catch (e) { 
+        console.log(e) 
+    }
+    res.end()
 })
 
 router.post('/admin/users/:id', auth, async (req, res) => {
-    const user = await User.findOne({_id: req.params.id})
+    try {
+        const user = await User.findOne({_id: req.params.id})
 
-    if(req.body.modify=='set') {
-        user.leavesLeft = parseInt(req.body.amount)
+        if(req.body.modify=='set') {
+            user.leavesLeft = parseInt(req.body.amount)
+        }
+        else {
+            user.leavesLeft += parseInt(req.body.amount)
+        }
+        await user.save()
+    } catch (e) {
+        console.log(e)
     }
-    else {
-        user.leavesLeft += parseInt(req.body.amount)
-    }
-    await user.save()
 
     res.redirect('/admin/users')
 })
 
 router.post('/admin/users', auth, async (req, res) => {
-    const users = await User.find({})
+    try {
+        const users = await User.find({})
 
-    users.forEach(async (e) => {
-        if(req.body.modify=='set') {
-            e.leavesLeft = parseInt(req.body.amount)
-        }
-        else {
-            e.leavesLeft += parseInt(req.body.amount)
-        }
-        await e.save()
-    })
+        users.forEach(async (e) => {
+            if(req.body.modify=='set') {
+                e.leavesLeft = parseInt(req.body.amount)
+            }
+            else {
+                e.leavesLeft += parseInt(req.body.amount)
+            }
+            await e.save()
+        })
+    } catch (e) {
+        console.log(e)
+    }
 
     res.redirect('/admin/users')
 })
