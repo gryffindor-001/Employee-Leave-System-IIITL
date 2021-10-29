@@ -62,7 +62,7 @@ router.post('/admin/leave', auth, async (req, res) => {
             await user.save()
         }
         
-        const pending = await Leave.find({_id: leave.userID, status: "pending"})
+        const pending = await Leave.find({userID: leave.userID, status: "pending"})
 
         pending.forEach(async (e) => {
             var estart = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + " 00:00+05:30"
