@@ -11,25 +11,27 @@ router.get('/admin', auth, (req, res) => {
 
 router.get('/admin/leave', auth, async (req, res) => {
     try {
-        var pending = await Leave.find({status: 'pending'})
+        var pend = await Leave.find({status: 'pending'})
         
-        await pending.forEach(async (e) => {
+        await pend.forEach(async (e) => {
+            // console.log('yo')
             var cur = moment().unix()
-            var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + "00:00+05:30"
+            var start = e.startTimeYear + '-' + e.startTimeMonth + '-' + e.startTimeDay + " 00:00+05:30"
+            
+            // console.log(start)
             start = moment(start, "YYYY-MM-DD hh:mm")
+            // console.log(start)
             start = moment(start).unix()
-
             start = start/(60*60*24)
             cur = cur/(60*60*24)
-
+            // console.log(start,cur)
             if(start<cur) {
                 e.status = "reject"
                 e.comments = "Admin was unable to respond in Time"
                 await e.save()  
             }
         })
-
-        pending = await Leave.find({status: 'pending'})
+        var pending = await Leave.find({status: 'pending'})
         
         res.render("admin-leave", {pending})
     } catch (e) {
