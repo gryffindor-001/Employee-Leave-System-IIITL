@@ -109,6 +109,9 @@ router.post('/admin/users/:id', auth, async (req, res) => {
         else {
             user.leavesLeft += parseInt(req.body.amount)
         }
+        if(user.leavesLeft < 0){
+            user.leavesLeft = 0;
+        }
         await user.save()
     } catch (e) {
         console.log(e)
@@ -127,6 +130,9 @@ router.post('/admin/users', auth, async (req, res) => {
             }
             else {
                 e.leavesLeft += parseInt(req.body.amount)
+            }
+            if(e.leavesLeft < 0){
+                e.leavesLeft = 0;
             }
             await e.save()
         })
