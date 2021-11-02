@@ -19,8 +19,8 @@
             var startDate = new Date(stDate[0], stDate[1] - 1, stDate[2]);
             var startTimeStamp = startDate.getTime()
 
-            if (startTimeStamp < todayTimeStamp) {
-                alert("Starting Date can not be earlier than today")
+            if (startTimeStamp <= todayTimeStamp) {
+                alert("starting date should be after today")
                 form.startDate.focus();
                 return false
             }
