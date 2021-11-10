@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Leave Request Form</title>
+    <script>
+        function dateValidator(form) {
+            var date = new Date();
+            var todayDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            var todayTimeStamp = todayDate.getTime()
+
+            var stDate = form.startDate.value.split("-")
+            var startDate = new Date(stDate[0], stDate[1] - 1, stDate[2]);
+            var startTimeStamp = startDate.getTime()
+
+            if (startTimeStamp <= todayTimeStamp) {
+                alert("starting date should be after today")
+                form.startDate.focus();
+                return false
+            }
+
+            var enDate = form.endDate.value.split("-")
+            var endingDate = new Date(enDate[0], enDate[1] - 1, enDate[2]);
+            var endTimeStamp = endingDate.getTime()
+
+            if (endTimeStamp < startTimeStamp) {
+                alert("End Date can not be earlier than Start date")
+                form.endDate.focus();
+                return false
+            }
+            
+            var days = endTimeStamp-startTimeStamp;
+            days = days/(1000*60*60*24)
+            if(days> <%=leavesLeft%>) {
+                alert("Asking for too many Leaves")
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+    
+</head>
+
+<body class="bg-primary-site-darker">
+    <header>
+        <div class="container-fluid bg-primary-site-darker">
+            <div class="py-2 row">
+                <div class="col-md">
+                    <ul class="nav d-flex m-0 justify-content-center justify-content-md-start">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link" style="color:#FFFFFF;">Home</a>
+                        </li>
+                        <li class="nav-item" >
+                            <a href="/user/me" class="nav-link" style="color:#FFFFFF;">Profile</a>
+                        </li>
+                        <li class="nav-item" >
+                            <a href="/about" class="nav-link" style="color:#FFFFFF;">About</a>
+                        </li>
+                        <li class="nav-item" >
+                            <a href="/logout" class="nav-link" style="color:#FFFFFF;">Logout</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a href="s" class="nav-link">Hello</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="s" class="nav-link">Hello</a>
+                        </li> -->
+                    </ul>
+                </div>
+                <div class="col-md">
+                    <ul class="nav d-flex m-0 justify-content-md-end justify-content-center">
+                        <li class="nav-item">
+                            <a href="https://mail.google.com/a/iiitl.ac.in" class="nav-link text-light px-2" target="_blank">
+                                <i class="bi bi-envelope-fill" role="img" aria-label="GitHub"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://www.facebook.com/Indian-Institute-of-Information-Technology-Lucknow-IIITL-101698791377071" class="nav-link text-light px-2" target="_blank">                      
+                                <i class="bi-facebook" role="img" aria-label="GitHub"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://www.linkedin.com/school/iiitl/" class="nav-link text-light px-2" target="_blank">
+                            
+                                <i class="bi-linkedin" role="img" aria-label="GitHub"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://twitter.com/iiit_lucknow" class="nav-link text-light px-2" target="_blank">
+                            
+                                <i class="bi-twitter" role="img" aria-label="GitHub"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="https://www.instagram.com/iiitlucknow/" class="nav-link text-light px-2" target="_blank">
+                            
+                                <i class="bi-instagram" role="img" aria-label="GitHub"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white">
+            <div class=" row d-flex flex-column flex-md-row py-2 align-items-center align-items-md-end">
+                <div class="col-4 col-sm-2 mb-3">
+                    <img src="https://iiitl.ac.in/wp-content/uploads/2019/10/Final_Logo_IIITL.png" alt="IIIT Logo" class="img-thumbnail border-0">
+                </div>
+                <div class="col">
+                    <h3 class="text-center text-md-right text-dark">Indian Institute of Information Technology, Lucknow </h3>
+                    <h3 class="text-center text-md-right text-dark">भारतीय सूचना प्रौद्योगिकी संस्थान, लखनऊ</h3>
+                    <p class="text-center text-md-right lead font-weight-normal">(An Institute of National Importance by the Act of Parliament)</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container-fluid">
+            <div class="container py-5">
+                <div class="mb-3 d-flex justify-content-between align-items-center">
+                    <h3 class="text-light">Pending Leave Applications</h3>
+                    <button class="btn  btn-outline-light" data-toggle="modal" data-target="#exampleModal" style="white-space: nowrap">+ Add Leave</button>
+                </div>
+                <div class="border border-accent-site rounded bg-white table-responsive-lg">
+                        <table class="table table-hover table-borderless m-0 leave-list">
+                            <thead>
+                                <tr class="bg-accent-site">
+                                    <th scope="col" ></th>
+                                    <th scope="col" style="white-space: nowrap">Start Date</th>
+                                    <th scope="col" style="white-space: nowrap">End Date</th>
+                                    <th scope="col" style="white-space: nowrap">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% var i=1 %>
+                                <% pending.forEach((e)=>{ %>
+                                <tr class="table-row" data-id="<%= e._id %>" data-toggle="modal" data-target="#leaveInfo">
+                                    <th scope="row"><%=i%></th>
+                                    <% i=i+1 %>
+                                    <td><%=e.startTimeDay%>/<%=e.startTimeMonth%>/<%=e.startTimeYear%></td>
+                                    <td><%=e.endTimeDay%>/<%=e.endTimeMonth%>/<%=e.endTimeYear%></td>
+                                    <td><a href="/leave/delete?id=<%= e._id %>"><button>delete</button></a></td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Leave Form Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="AddNewModel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add New Leave</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form name="leaveForm" method="POST" onsubmit="return dateValidator(this)" class="form">
+                        <div class="form-group row align-items-center">
+                            <label for="startDate" class="col-3 col-form-label" style="white-space: nowrap">Leave From:</label>
+                            <div class="col">
+                                <input type="date" name="startDate" id="startDate" class="form-control" required>
+
+                              </div>
+                        </div>
+                        <div class="form-group row align-items-center">
+                            <label for="endDate" class="col-3 col-form-label"  style="white-space: nowrap">Leave To:</label>
+                            <div class="col">
+                                <input type="date" name="endDate" id="endDate" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="reason">Reason for Leave:</label>
+                            <textarea name="reason" id="reason" class="form-control" row="8" required></textarea>
+                        </div> 
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-secondary mx-1" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-accent-site" value="Add">
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- Genaral Modal For Data -->
+          <div class="modal fade" id="leaveInfo" tabindex="-1" role="dialog" aria-labelledby="AddNewModel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Why are You here</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="label-info-group row align-items-center" id="info-start-date">
+                            <h6 class="col-3 m-0 mr-3 p-0 text-right">Start Date:</h6>
+                            <span>20 January 2021</span>
+                        </div>
+                        
+                        <div class="label-info-group row align-items-center" id="info-end-date">
+                            <h6 class="col-3 m-0 mr-3 p-0 text-right">End Date:</h6>
+                            <span>20 January 2021</span>
+                        </div>
+                        
+                        <div class="label-info-group row align-items-center" id="info-duration">
+                            <h6 class="col-3 m-0 mr-3 p-0 text-right">Reason:</h6>
+                            <span>20 January 2021</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                    <a id="del-btn" href=""><button class="btn btn-outline-danger">Delete</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+    </main>
+
+    <script src="/js/jquery-3.6.0.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+        $('#leaveInfo').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var _id = button.data('id') 
+            const pen = <%- JSON.stringify(pending) %>
+            const e = pen.find((x)=>x._id==_id)
+            console.log(e)
+            var modal = $(this)
+            modal.find('.modal-title').text("Pending request for "+e.name)
+            modal.find('.modal-body .container #info-start-date span').text(e.startTimeDay+"/"+e.startTimeMonth+"/"+e.startTimeYear);
+            modal.find('.modal-body .container #info-end-date span').text(e.endTimeDay+"/"+e.endTimeMonth+"/"+e.endTimeYear);
+            modal.find('.modal-body .container #info-duration span').text(e.reason);
+            modal.find('.modal-footer #del-btn').attr("href", "/leave/delete?id=" + e._id);
+        })
+    })
+    </script>
+</body>
+
+</html>
