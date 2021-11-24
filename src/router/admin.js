@@ -65,7 +65,7 @@ router.post('/admin/leave', auth, async (req, res) => {
         var temp = (end-start)/(60*60*24)
         
         if(leave.status==="approve") {
-            user.leavesLeft -= temp
+            user.leavesLeft -= (temp+1)
             await user.save()
         }
         
